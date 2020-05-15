@@ -96,22 +96,25 @@ bool is_even(int number)
 	return res;
 }
 
-void remove_even(int* mas, int size)
+void remove_even(int** mas, int &size)
 {
+	int* src = *mas;
 	int k = 0; //количество уже найденных чётных
 	for (int i = 0; i < size; i++)
 	{
-		mas[i - k] = mas[i];
-		if (is_even(mas[i]))
+		src[i - k] = src[i];
+		if (is_even(src[i]))
 		{
 			k++;
 		}
 	}
-
-	for (int i = size - k; i < size; i++)
+	size = size - k;
+	int* m = new int[size];
+	for (int i = 0; i < size; i++)
 	{
-		mas[i] = 0;
+		m[i] = src[i];
 	}
+	*mas = m;
 }
 
 void print_menu()
@@ -201,7 +204,7 @@ int main()
 					cout << "Перед удалением необходимо ввести массив!" << endl;
 					break;
 				}
-				remove_even(mas, size);
+				remove_even(&mas, size);
 				cout << "Чётные числа удалены." << endl;
 				break;
 			}
